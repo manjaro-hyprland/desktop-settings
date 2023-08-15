@@ -1,0 +1,19 @@
+name: "forward-all-contributors"
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+jobs:
+  add-contributors:
+    runs-on: ubuntu-latest
+    steps:
+    - name: create comment in target repo
+      uses: peter-evans/create-or-update-comment@v3
+      if: contains(github.event.comment.body, '@all-contributors')
+      with:
+        issue-number: 73
+        repository: manjaro-hyprland/manjaro-hyprland
+        body: ${{ github.event.comment.body }}
+        token: ${{ secrets.PUSH_AND_TRIGGER }}

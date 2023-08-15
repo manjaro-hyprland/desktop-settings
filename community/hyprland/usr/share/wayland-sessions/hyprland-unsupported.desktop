@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Hyprland (unsupported GPU)
+Comment=Wayland compositor
+Exec=Hyprland --gpu=sw
+Type=Application
