@@ -12,6 +12,12 @@ custom_conf_on_branch() {
 custom_conf_referenced() {
     grep -q "Include[ ]*=[ ]*$custom_conf" $pacman_conf
 }
+echo "## !!!!!! checking for custom repo configuration"
+echo $(custom_conf_exists)
+echo $(custom_conf_on_branch)
+echo $(custom_conf_referenced)
+
+
 
 if [ "$1" = "check" ]; then
     custom_conf_exists || exit 1
@@ -19,6 +25,8 @@ if [ "$1" = "check" ]; then
     custom_conf_referenced || exit 1
     exit 0
 fi
+echo "passed!!!"
+
 
 if [ "$(id -u)" -ne 0 ]; then
     echo "## Please run as root/sudo"
