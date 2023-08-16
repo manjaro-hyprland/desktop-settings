@@ -40,14 +40,20 @@ EOL
     echo "## updated $custom_conf"
 fi
 
+echo $custom_conf
+
 ## remove the classic repo config
 if grep -q "\[manjaro-hyprland\]" $pacman_conf; then
     sed -i '/\[manjaro-hyprland\]/,+2 d' $pacman_conf
     echo "## removed classic repo configuration from $pacman_conf"
 fi
 
+echo $custom_conf
+
 ## add a include line to the pacman.conf
 if ! custom_conf_referenced; then
     sed -i "/^\[core\]/i \Include = $custom_conf\n" $pacman_conf
     echo "## now referencing $custom_conf from $pacman_conf"
 fi
+
+echo $custom_conf
