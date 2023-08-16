@@ -1,0 +1,50 @@
+name: trigger pkgbuild
+
+on:
+  release:
+    types: [published]  
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'tag to dispatch'
+        required: true
+  push:
+    branches:
+      - hyprland
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        repository: manjaro-hyprland/desktop-settings
+        ref: hyprland
+        fetch-depth: 0
+    - name: md5
+      id: md5
+      if: ${{ github.event_name == 'release' }}
+      run: |
+        curl --location --remote-header-name --silent -o release.tar.gz \
+          https://github.com/${{ github.repository }}/archive/${{ github.event.release.tag_name || github.event.inputs.tag }}.tar.gz
+        echo "md5=$(md5sum release.tar.gz | cut -d ' ' -f 1)" >>$GITHUB_OUTPUT
+    - name: info
+      id: info
+      if: ${{ github.event_name == 'push' }}
+      run: |
+        echo "git-version=$(printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)")" >> $GITHUB_OUTPUT
+    - uses: peter-evans/repository-dispatch@v2
+      if: ${{ github.event_name == 'release' }}
+      with:
+        token: ${{ secrets.DISPATCH_TOKEN }}
+        repository: manjaro-hyprland/manjaro-hyprland-settings
+        event-type: source_update
+        client-payload: '{ "repository": "${{ github.repository }}", "version": "${{ github.event.release.tag_name || github.event.inputs.tag }}", "md5": "${{ steps.md5.outputs.md5 }}" }'
+    - uses: peter-evans/repository-dispatch@v2
+      if: ${{ github.event_name == 'push' || github.event_name == 'release' }}
+      with:
+        token: ${{ secrets.DISPATCH_TOKEN }}
+        repository: manjaro-hyprland/manjaro-hyprland-settings-git
+        event-type: source_update
+        client-payload: '{ "repository": "${{ github.repository }}", "version": "${{ steps.info.outputs.git-version }}" }'
