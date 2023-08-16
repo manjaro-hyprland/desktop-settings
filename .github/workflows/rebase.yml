@@ -20,4 +20,4 @@ jobs:
         with:
           upstream: https://gitlab.manjaro.org/profiles-and-settings/desktop-settings.git
           upstream-branch: master
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DISPATCH_TOKEN }}
