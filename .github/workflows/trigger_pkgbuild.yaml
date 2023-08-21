@@ -23,6 +23,7 @@ jobs:
         ref: hyprland
         fetch-depth: 0
     - name: test
+      id: test
       with:
         additional_gpg: ${{ vars.ADDITIONAL_GPG }}
         additional_gpg1: >
