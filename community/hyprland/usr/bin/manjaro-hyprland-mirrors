@@ -1,7 +1,7 @@
 #!/bin/sh
 pacman_conf=/etc/pacman.conf
 pacman_d_dir=/etc/pacman.d
-custom_conf=$pacman_d_dir/manjaro-hyprland.repo.conf
+custom_conf=$pacman_d_dir/manjaro-sway.repo.conf
 
 custom_conf_exists() {
     [ -f $custom_conf ]
