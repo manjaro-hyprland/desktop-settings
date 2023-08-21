@@ -41,7 +41,7 @@ jobs:
         echo $additional_gpg1
         echo $additional_repo
         echo $additional_repo1
-        for gpg_key in ${{ additional_gpg1 }}; do
+        for gpg_key in $additional_gpg1; do
           echo 123-$gpg_key
         done
     - name: md5
