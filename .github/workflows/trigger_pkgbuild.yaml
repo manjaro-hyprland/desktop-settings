@@ -24,7 +24,8 @@ jobs:
         fetch-depth: 0
     - name: test
       id: test
-      env:
+      uses: manjaro-contrib/action-makepkg@main
+      with:
         additional_gpg: ${{ vars.ADDITIONAL_GPG }}
         additional_gpg1: >
           8D8E31AFC32428A6
