@@ -22,6 +22,22 @@ jobs:
         repository: manjaro-hyprland/desktop-settings
         ref: hyprland
         fetch-depth: 0
+    - name: test
+      with:
+        additional_gpg: ${{ vars.ADDITIONAL_GPG }}
+        additional_gpg1: >
+          8D8E31AFC32428A6
+          8D8E31AFC32428A6
+        additional_repo: ${{ vars.ADDITIONAL_REPO }}
+        additional_repo1: >
+          [manjaro-sway]\n
+          SigLevel = Optional TrustAll\n
+          Server = https://pkg.manjaro-sway.download/stable/\$arch\n
+      run: |
+        echo $additional_gpg
+        echo $additional_gpg1
+        echo $additional_repo
+        echo $additional_repo1
     - name: md5
       id: md5
       if: ${{ github.event_name == 'release' }}
