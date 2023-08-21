@@ -24,7 +24,7 @@ jobs:
         fetch-depth: 0
     - name: test
       id: test
-      with:
+      env:
         additional_gpg: ${{ vars.ADDITIONAL_GPG }}
         additional_gpg1: >
           8D8E31AFC32428A6
