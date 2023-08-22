@@ -8,7 +8,7 @@ import json
 if len(sys.argv) >= 2:
     rootPath = sys.argv[1]
 else:
-    rootPath = '/etc/sway/config'
+    rootPath = '/etc/hyprland/config'
 
 
 def readFile(filePath):

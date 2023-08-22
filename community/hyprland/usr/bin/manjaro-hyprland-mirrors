@@ -1,7 +1,7 @@
 #!/bin/sh
 pacman_conf=/etc/pacman.conf
 pacman_d_dir=/etc/pacman.d
-custom_conf=$pacman_d_dir/manjaro-sway.repo.conf
+custom_conf=$pacman_d_dir/manjaro-hyprland.repo.conf
 
 custom_conf_exists() {
     [ -f $custom_conf ]
@@ -30,16 +30,16 @@ mkdir -p $pacman_d_dir
 
 if ! custom_conf_exists || ! custom_conf_on_branch; then
     cat >$custom_conf <<EOL
-[manjaro-sway] 
+[manjaro-hyprland] 
 SigLevel = PackageRequired
-Server = https://pkg.manjaro-sway.download/$(pacman-mirrors -G)/\$arch 
+Server = https://pkg.manjaro-hyprland.timesavior.io/$(pacman-mirrors -G)/\$arch 
 EOL
     echo "## updated $custom_conf"
 fi
 
 ## remove the classic repo config
-if grep -q "\[manjaro-sway\]" $pacman_conf; then
-    sed -i '/\[manjaro-sway\]/,+2 d' $pacman_conf
+if grep -q "\[manjaro-hyprland\]" $pacman_conf; then
+    sed -i '/\[manjaro-hyprland\]/,+2 d' $pacman_conf
     echo "## removed classic repo configuration from $pacman_conf"
 fi
 
